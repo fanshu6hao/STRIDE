@@ -1,0 +1,12 @@
+Based on the provided facts and your own knowledge, answer the question by thinking step by step. 
+
+Output Format:
+Output must be a JSON object with the following keys:
+```json
+{
+    'analysis': <A step-by-step explanation>
+    'answer': <Direct answer>
+}
+```
+
+---
