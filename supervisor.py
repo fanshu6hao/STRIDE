@@ -298,44 +298,6 @@ if __name__ == '__main__':
         # 重定向标准输出到txt文件
         sys.stdout = f
         print(note)
-        '''
-        大致流程：
-        1. 示例:
-            Question:
-            What is the official language of the location associated with the main subject of *The Quiet American*?
-
-            Plan:
-            Q1: Who is the main subject of *The Quiet American*?
-            Q2: What location is associated with that subject?
-            Q3: What is the official language of that location?
-
-            Progress:
-            Solved: {}
-            Pending: {Q1, Q2, Q3}
-            FailureLog: {}
-
-            Supervisor 输出示例:
-            ```json
-            [
-                {
-                    "qid": "Q1",
-                    "action": "retrieve",
-                    "query": "main subject of The Quiet American"
-                },
-                { // 可能有多个
-                    ...
-                }
-            ]
-            ```
-        2. 从Supervisor的输出中，提出每个的 qid，action, query
-            2.1 对于 action = "retrieve" 和 "rewrite" 的，进行检索，得到相关的documents
-                2.11 将 Question + documents 填入 Extractor的prompt，得到 fact
-                2.12 将 fact 和 sub-question 输入 Reasoner，得到 sub-answer （需要考虑同时给所有的子问题吗？可能一个事实能够回答多个子问题呢？）
-            2.2 对于 action = "answer" 的，直接将 Question + 已经得到的 facts 填入 Reasoner的prompt，得到 sub-answer （之前已获得的事实和当前子问题）
-        3. 更新Progress （若为final answer则跳过，直接结束）
-        4. 循环2-4，直到所有的sub-question都解决完毕，或者达到最大迭代次数
-            
-        '''
         with jsonlines.open(write_path, 'a') as writer:
             for item in tqdm(total_data, desc=f"Supervisor + E+R [{run_name}]"):
                 id_ = item['id']
@@ -438,7 +400,6 @@ if __name__ == '__main__':
                 FAILED_FLAG = False ### 标记当前case是否失败，无法继续
                 while final_answer is None and iteration <= args.max_iteration:
                     iteration += 1
-                    ### 修改成batch的
                     # 假设当前正在处理一个主问题 id_
                     # s_output_list 来自 Supervisor 的输出（当前 iteration）
 
@@ -554,8 +515,6 @@ if __name__ == '__main__':
                     # 1. 先处理 retrieve/rewrite 成功的子问题（需要 sub-answer）
                     for (qid, action, retrieval_query) in extractor_tasks:
                         if qid in fact_dict:  # 说明 extractor 成功
-                            # 注意：这里只用当前 fact，还是所有 facts？
-                            # 暂时用当前 fact
                             facts_str = fact_dict[qid][1]  # e_output
                             reasoner_tasks.append((qid, action, retrieval_query, facts_str))
 
