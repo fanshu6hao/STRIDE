@@ -1,12 +1,10 @@
-# STRIDE
+# STRIDE: Strategic Iterative Decision-Making for Retrieval-Augmented Multi-Hop Question Answering
 
-STRIDE is a hierarchical framework for multi-hop question answering with retrieval. It decomposes reasoning into a **Meta-Planner** (strategy), a **Supervisor** with **Extractor** and **Reasoner** modules (control and execution), and an optional **Fallback Reasoner** for cases where the main run does not yield an answer. **STRIDE-FT** refers to modular fine-tuning (supervised LoRA and DPO) built from execution trajectories.
+🌟 This is the official code of the paper **STRIDE: Strategic Iterative Decision-Making for Retrieval-Augmented Multi-Hop Question Answering** (SIGIR 2026 Full Paper).
 
-## Requirements
+🔗 Paper Link: [STRIDE](https://arxiv.org/abs/2604.17405)
 
-- Python 3.10+
-- CUDA-capable GPU recommended for inference and training
-- Dependencies: install from this package tree (see below)
+📖 STRIDE is a hierarchical framework for multi-hop question answering with retrieval. It decomposes reasoning into a **Meta-Planner** (strategy), a **Supervisor** with **Extractor** and **Reasoner** modules (control and execution), and an optional **Fallback Reasoner** for cases where the main run does not yield an answer. **STRIDE-FT** refers to modular fine-tuning (supervised LoRA and DPO) built from execution trajectories.
 
 ## Installation
 
@@ -273,4 +271,15 @@ Reported metrics: **EM**, **F1**, **precision**, **recall**.
 
 ## Reference
 
-Cite the STRIDE paper for this codebase. For upstream QA data, see [IRCoT](https://github.com/stonybrooknlp/ircot).
+If you find this repository or paper useful, you can cite:
+
+```
+@misc{chen2026stride,
+      title={STRIDE: Strategic Iterative Decision-Making for Retrieval-Augmented Multi-Hop Question Answering}, 
+      author={Wei Chen and Lili Zhao and Zhi Zheng and HuiJun Hou and Tong Xu},
+      year={2026},
+      eprint={2604.17405},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2604.17405}, 
+}
